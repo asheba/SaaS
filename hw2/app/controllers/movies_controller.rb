@@ -7,7 +7,18 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    update_session(params)
+    @ordered_by = params[:order_by]
+    @ratings = []
+    @ratings = params[:ratings].keys unless params[:ratings].blank?
+    full_params = params.merge(session){ |key, oldval, newval| oldval }
+    redirect_to movies_path(full_params) if full_params != params
+
+    @all_ratings = Movie.get_ratings
+
+    @movies = Movie.find_all_by_rating(@ratings)
+    @movies.sort!{ |a,b| a.send(@ordered_by) <=> b.send(@ordered_by) } unless @movies.blank? or @ordered_by.blank?
+    
   end
 
   def new
@@ -36,6 +47,11 @@ class MoviesController < ApplicationController
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
+  end
+
+  def update_session(params)
+    relevant_params = params.select{ |k,v| ["order_by", "ratings"].include?(k) }
+    session.update(relevant_params)
   end
 
 end
