@@ -102,9 +102,7 @@ When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
   attach_file(field, File.expand_path(path))
 end
 
-When /^(?:|I ) check the following ratings: "([^"]*)"$/ do |ratings|
-  Movie.all_ratings.each { |rating| uncheck(rating.strip) }
-  ratings.split(/,\s?/).each { |rating| check(rating.strip) }
+When /^(?:|I ) check the followi ratings: "([^"]*)"$/ do |ratings|
 end
 
 Then /^(?:|I )should see "([^"]*)"$/ do |text|

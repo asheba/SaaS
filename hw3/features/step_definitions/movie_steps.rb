@@ -23,4 +23,6 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   # HINT: use String#split to split up the rating_list, then
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
+  Movie.all_ratings.each { |rating| rating = "ratings[#{rating.strip.gsub(/"/, "")}]" ; if uncheck.nil? then uncheck(rating) else check(rating) end }
+  rating_list.split(/,\s?/).each { |rating| rating = "ratings[#{rating.strip.gsub(/"/, "")}]" ; if uncheck.nil? then check(rating) else uncheck(rating) end }
 end
