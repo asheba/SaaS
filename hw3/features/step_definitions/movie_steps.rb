@@ -10,8 +10,9 @@ end
 #   on the same page
 
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
-  regexp = Regexp.new(/#{e1}.*#{e2}/)
-  assert_not_nil(regexp.match(page.body), "The movie #{e1} did not appear before #{e2}")
+  i1 = page.body.index(e1)
+  i2 = page.body.index(e2)
+  assert(i1 < i2, "The movie #{e1} did not appear before #{e2}")
 end
 
 # Make it easier to express checking or unchecking several boxes at once

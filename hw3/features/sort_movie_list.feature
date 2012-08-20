@@ -25,7 +25,7 @@ Scenario: sort movies alphabetically
   When I follow "Movie Title"
   And I check the following ratings: "PG, R, PG-13, NC-17, G"
   And I press "ratings_submit"
-  Then I should see "2001: A Space Odyssey before" before "Aladdin" 
+  Then I should see "2001: A Space Odyssey" before "Aladdin" 
   And I should see "Aladdin" before "Amelie" 
   And I should see "Amelie" before "Chicken Run" 
   And I should see "Chicken Run" before "Chocolat" 
