@@ -10,9 +10,8 @@ end
 #   on the same page
 
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
-  #  ensure that that e1 occurs before e2.
-  #  page.content  is the entire content of the page as a string.
-  flunk "Unimplemented"
+  regexp = Regexp.new(/#{e1}.*#{e2}/)
+  assert_not_nil(regexp.match(page.body), "The movie #{e1} did not appear before #{e2}")
 end
 
 # Make it easier to express checking or unchecking several boxes at once
